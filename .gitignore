@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.png
+*.txt
 3.7.0
 4.65.0
 LWM_building/
