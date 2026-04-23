@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.pyo
+*.png
+3.7.0
+4.65.0
+LWM_building/
+training_history.json
