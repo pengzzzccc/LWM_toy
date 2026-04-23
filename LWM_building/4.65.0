@@ -1,0 +1,12 @@
+Defaulting to user installation because normal site-packages is not writeable
+Collecting tqdm
+  Downloading tqdm-4.67.3-py3-none-any.whl.metadata (57 kB)
+Requirement already satisfied: colorama in c:\users\20391\appdata\roaming\python\python312\site-packages (from tqdm) (0.4.6)
+Downloading tqdm-4.67.3-py3-none-any.whl (78 kB)
+Installing collected packages: tqdm
+  WARNING: The script tqdm.exe is installed in 'C:\Users\20391\AppData\Roaming\Python\Python312\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed tqdm-4.67.3
+
+[notice] A new release of pip is available: 24.3.1 -> 26.0.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
