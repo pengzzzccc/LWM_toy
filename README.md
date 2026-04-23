@@ -1,6 +1,26 @@
-# 世界模型 (World Model) - 增强版
+# 世界模型 (World Model) - 研究与实践增强版
 
 基于 NumPy/CuPy 的纯手写世界模型（World Model），在网格世界环境中学习状态转移函数和奖励预测，并利用学到的模型进行"想象"和规划。
+
+## 研究背景：为什么研究世界模型？
+
+### 动机
+- **真实交互昂贵**: 在机器人控制、自动驾驶等领域，试错成本高、样本效率低
+- **离线想象需求**: 需要在学到的模型里做规划、反事实推理和数据增强
+- **决策核心**: 世界模型是模型预测控制（MPC）、规划和策略学习的基础
+
+### 研究方向
+1. **动态学习 (Dynamics Learning)**: 学习状态-动作到下一状态与奖励的映射
+2. **模型预测控制 (MPC/Planning)**: 用学到的模型做滚动时域规划与策略搜索
+3. **不确定性与鲁棒性 (Uncertainty & Robustness)**: 量化模型置信度，防止"幻想"中过拟合
+4. **泛化与程序化生成 (Generalization)**: 跨不同地图/环境保持预测与规划能力
+5. **可解释可视化 (Interpretability)**: 帮助调试模型错误并理解其失败模式
+
+### 当前困境与挑战
+- **误差累积 (Compounding Error)**: 多步想象越走越偏
+- **分布偏移 (Distribution Shift)**: 训练数据与规划时访问的状态不一致
+- **不确定性度量难**: 要捕捉真实不确定性，又不能过度保守
+- **长程依赖**: 在更复杂环境/更长序列下保持可靠预测
 
 ## 核心特性
 
@@ -55,7 +75,7 @@ python demo.py --epochs 300 --size 20 --maps 10 --layout mixed
 ## 项目结构
 
 ```
-LWM_building/
+LWM_toy/
 ├── world_model.py          # 世界模型 MLP (GPU/CPU自适应)
 ├── environment.py          # 网格世界环境 (程序化地图生成)
 ├── train.py                # 训练流程 + 可视化函数
@@ -115,6 +135,8 @@ LWM_building/
 # world_model.py 顶部
 try:
     import cupy as cp
+    _test = cp.array([1.0, 2.0], dtype=cp.float32)
+    _ = cp.sqrt(_test)
     xp = cp  # GPU
 except:
     xp = np  # CPU

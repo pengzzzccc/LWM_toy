@@ -6,12 +6,20 @@ USE_GPU = False
 try:
     import cupy as cp
     cp.cuda.Device(0).compute_capability
+    # 实际测试一个 GPU 运算，确保 CUDA toolkit 完整可用
+    _test = cp.array([1.0, 2.0], dtype=cp.float32)
+    _ = cp.sqrt(_test)
+    cp.cuda.Stream.null.synchronize()
     USE_GPU = True
     xp = cp
     BACKEND = "GPU (CuPy/CUDA)"
 except Exception:
     xp = np
     BACKEND = "CPU (NumPy/OpenBLAS)"
+    try:
+        del cp
+    except Exception:
+        pass
 
 # 设置 OpenBLAS 多线程
 os.environ["OPENBLAS_NUM_THREADS"] = str(os.cpu_count() or 8)

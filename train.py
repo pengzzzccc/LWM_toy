@@ -268,8 +268,10 @@ def train_world_model(num_epochs=200, num_episodes=5000, size=15,
       - 热力图分析
       - 完整的训练过程监控
     """
-    plt.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei', 'DejaVu Sans']
+    plt.rcParams['font.sans-serif'] = ['Microsoft YaHei', 'SimHei', 'DejaVu Sans']
     plt.rcParams['axes.unicode_minus'] = False
+    plt.rcParams['axes.formatter.use_locale'] = False
+    plt.rcParams['axes.formatter.useoffset'] = False
 
     print("=" * 60)
     print("    世界模型 (World Model) - 全面增强训练")
@@ -447,9 +449,14 @@ def train_world_model(num_epochs=200, num_episodes=5000, size=15,
     print("[可视化] 训练总结已保存: 06_training_summary.png")
 
     # 保存训练历史
-    history_serializable = {k: [float(x) if isinstance(x, (np.floating, float)) else x
-                                 for x in v] if isinstance(v, list) else v
-                            for k, v in history.items()}
+    def _to_serializable(value):
+        if isinstance(value, (np.floating, np.integer)):
+            return float(value)
+        if isinstance(value, (list, tuple)):
+            return [_to_serializable(item) for item in value]
+        return value
+
+    history_serializable = {k: _to_serializable(v) for k, v in history.items()}
     with open("training_history.json", "w") as f:
         json.dump(history_serializable, f, indent=2)
     print("[保存] 训练历史已保存: training_history.json")
