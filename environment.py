@@ -56,6 +56,9 @@ class GridWorld:
         # 地形网格
         self.terrain = np.zeros((size, size), dtype=np.int8)
         
+        # 先设置目标位置（地图生成需要知道goal位置）
+        self.goal = goal or (size - 1, size - 1)
+        
         # 生成地图
         if walls is not None:
             self.walls = set(walls)
@@ -64,7 +67,6 @@ class GridWorld:
         else:
             self.walls = self._generate_layout(layout_type, num_walls, num_water, num_mud)
         
-        self.goal = goal or (size - 1, size - 1)
         self.terrain[self.goal[0]][self.goal[1]] = Terrain.GOAL
         
         self.agent_pos = None
